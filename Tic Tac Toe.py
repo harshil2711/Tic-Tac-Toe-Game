@@ -1,89 +1,107 @@
-main_board = ['_','_','_','_','_','_','_','_','_']
+import sys
 
-
-current_player = 'X'
-game_is_still_going =True
 winner = None
 
-def board():
-    print(main_board[0]+' | '+main_board[1]+' | '+main_board[2])
-    print(main_board[3]+' | '+main_board[4]+' | '+main_board[5])
-    print(main_board[6]+' | '+main_board[7]+' | '+main_board[8])
+game_is_still_going = True
+
+current_player = "X"
+
+main_board = ['_','_','_','_','_','_','_','_','_']
+
+def display_board():
+    print(main_board[0] + ' | ' + main_board[1] + ' | ' + main_board[2])
+    print(main_board[3] + ' | ' + main_board[4] + ' | ' + main_board[5])
+    print(main_board[6] + ' | ' + main_board[7] + ' | ' + main_board[8])
+
 
 def handle_turn(current_player):
     try:
-        print(f"{current_player}'s turn")
-        position = int(input("enter value 1-9"))
-        position = position-1
-        main_board[position]=current_player
-        board()
+        print(current_player + "'s turn")
+        position = input("enter the number 1-9 :")
+        position = int(position) - 1
+        main_board[position] = current_player
+        display_board()
     except:
-        if position == "quit":
+        if position == "clear":
             quit()
+
         else:
-            print(f"sorry i don't understand {position}")
-
-def playgame()
+            print("enter the valid input")
 
 
-# Switch player moves
-def flip():
-    global current_player
-    if current_player == 'X':
-        current_player = 'O'
-    else:
-        current_player = 'X'
+def check_if_gameover():
+    check_if_win()
+    check_if_tie()
 
-
-def if_game_over():
-    pass
 
 
 def check_if_win():
-    while winner:
-        if main_board[0]==main_board[1]==main_board[2]:
-            print(f"hurray!! {current_player} win the match")
-
-
-        elif main_board[3]==main_board[4]==main_board[5]:
-            print(f"{current_player} win the match")
-
-        elif main_board[6]==main_board[7]==main_board[8]:
-            print(f"{current_player} win the match")
-
-        elif main_board[0]==main_board[3]==main_board[6]:
-            print(f"{current_player} win the match")
-
-
-        elif main_board[1]==main_board[4]==main_board[7]:
-            print(f"{current_player} win the match")
-
-        elif main_board[2] == main_board[5] == main_board[8]:
-            print(f"{current_player} win the match")
-
-
-        elif main_board[0] == main_board[4] == main_board[8]:
-            print(f"{current_player} win the match")
-
-
-        elif main_board[2] == main_board[4] == main_board[6]:
-            print(f"{current_player} win the match")
-
-
-        else:
-            print(" match tie ")
-
+    check_rows()
+    check_column()
+    check_diag()
 
 
 def check_if_tie():
-    pass
+       if "_" not in main_board:
+            print("match is tie")
+            sys.exit()
 
 
+def flip():
+    global current_player
+    if current_player == "X":
+        current_player = "O"
+    else:
+        current_player = "X"
 
-def play():
-    board()
+
+def check_rows():
+    row1 = main_board[0] == main_board[1] == main_board[2] != "_"
+    row2 = main_board[3] == main_board[4] == main_board[5] != "_"
+    row3 = main_board[6] == main_board[7] == main_board[8] != "_"
+
+    if row1:
+        print(f"hurray....{current_player} wins the match")
+        sys.exit()
+    if row2:
+        print(f"hurray....{current_player} wins the match")
+        sys.exit()
+    if row3:
+        print(f"hurray....{current_player} wins the match")
+        sys.exit()
+
+
+def check_column():
+    col1 = main_board[0] == main_board[3] == main_board[6] != "_"
+    col2 = main_board[1] == main_board[4] == main_board[7] != "_"
+    col3 = main_board[2] == main_board[5] == main_board[8] != "_"
+
+    if col1:
+        print(f"hurray....{current_player} wins the match")
+        sys.exit()
+    if col2:
+        print(f"hurray....{current_player} wins the match")
+        sys.exit()
+    if col3:
+        print(f"hurray....{current_player} wins the match")
+        sys.exit()
+
+def check_diag():
+    diag1 = main_board[0] == main_board[4] == main_board[8] != "_"
+    diag2 = main_board[2] == main_board[4] == main_board[6] != "_"
+
+    if diag1:
+        print(f"hurray....{current_player} wins the match")
+        sys.exit()
+    if diag2:
+        print(f"hurray....{current_player} wins the match")
+        sys.exit()
+
+
+def play_game():
+    display_board()
     while game_is_still_going:
-        hadle_input(current_player)
-        if_game_over()
+        handle_turn(current_player)
+        check_if_gameover()
         flip()
-play()
+play_game()
